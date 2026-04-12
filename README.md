@@ -11,4 +11,4 @@ Per avviare il programma, compilare il file Calcolo punteggi di caratteristica D
 È necessario un compilatore che supporti lo standard C++20+.
 
 ## Download
-Puoi scaricare l'ultima versione compilata per Windows dalla sezione [Releases](https://github.com/SpadaSpettro/Assegnazione-punteggi-di-caratteristica_DandD/releases).
+È possibile scaricare l'ultima versione compilata per Windows dalla sezione [Releases](https://github.com/SpadaSpettro/Assegnazione-punteggi-di-caratteristica_DandD/releases).
