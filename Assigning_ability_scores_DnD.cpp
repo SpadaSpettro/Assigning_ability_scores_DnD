@@ -10,9 +10,9 @@
 #include <cmath>
 #include <array>
 #include <random>
-// Include Windows.h solo se si compila su Windows
+// Include Windows.h if compiling on Windows
 #ifdef _WIN32
-#include <Windows.h> //Necessaria per cambiare la codifica del terminale
+#include <Windows.h> // Necessary to change terminal's encoding
 #endif
 
 #include <fstream>
@@ -29,35 +29,35 @@ int calcoloModificatore(int punteggio_caratteristica);
 int main()
 {
 #ifdef _WIN32
-   // Forza il terminale a usare la codifica UTF-8
+   // Force UTF-8 encoding in terminal
    SetConsoleOutputCP(CP_UTF8);
    SetConsoleCP(CP_UTF8);
 #endif
-   // Impostazione del generatore di numeri casuali (C++ moderno)
+   // Random numbers generator setting (modern C++)
    random_device rd;
    mt19937 gen(rd());
-   uniform_int_distribution<> d6(1, 6); // Configura un dado a 6 facce
+   uniform_int_distribution<> d6(1, 6); // Set up for rolling a d6
 
    array<int, 4> esitoLanci;
    array<int, 6> punteggi;
    int forza = 0, destrezza = 0, costituzione = 0, intelligenza = 0, saggezza = 0, carisma = 0; // Variabili per punteggi
 
-   cout << "Questo programma determina i punteggi di caratteristica di un personaggio utilizzando il metodo del lancio del d6.\n\n";
+   cout << "This program determines the ability scores of a D&D character using the dice rolling method.\n\n";
    for (auto h = 0; h < 6; h++)
    {
       int punteggio = 0;
-      // Uso di "format" per creare stringhe chiare e pulite
-      cout << format("Risultati dei tiri del d6, {}ª serie: ", h + 1);
+      // Using "format" to create clear and clean strings
+      cout << format("Results of the d6 rolls, {} series: ", h + 1);
 
       for (auto &i : esitoLanci)
       {
-         i = d6(gen); // Lancia il d6
+         i = d6(gen); // Roll d6
          cout << " " << i;
       }
-      // C++20 Ranges: ordina l'array in modo molto semplice
+      // C++20 Ranges: order the array in a simple way
       ranges::sort(esitoLanci, greater());
 
-      cout << "\nQuesti sono i 3 risultati più alti: ";
+      cout << "\nThese are the 3 highest results: ";
       for (auto i = 0; i < 3; i++)
       {
          cout << " " << esitoLanci[i];
@@ -66,7 +66,7 @@ int main()
       cout << "\n\n";
       punteggi[h] = punteggio;
    }
-   cout << "Somme dei 3 risultati più alti per ogni sequenza di tiri:  ";
+   cout << "Sums of the 3 highest results for each roll series:  ";
    assegnazioneCaratteristica("FORZA", punteggi, forza);
    assegnazioneCaratteristica("DESTREZZA", punteggi, destrezza);
    assegnazioneCaratteristica("COSTITUZIONE", punteggi, costituzione);
@@ -74,36 +74,36 @@ int main()
    assegnazioneCaratteristica("SAGGEZZA", punteggi, saggezza);
    assegnazioneCaratteristica("CARISMA", punteggi, carisma);
 
-   cout << "Punteggi di caratteristica definitivi:" << endl;
-   cout << format("FORZA: {} (modificatore: {:+}).\n", forza, calcoloModificatore(forza));
-   cout << format("DESTREZZA: {} (modificatore: {:+}).\n", destrezza, calcoloModificatore(destrezza));
-   cout << format("COSTITUZIONE: {} (modificatore: {:+}).\n", costituzione, calcoloModificatore(costituzione));
-   cout << format("INTELLIGENZA: {} (modificatore: {:+}).\n", intelligenza, calcoloModificatore(intelligenza));
-   cout << format("SAGGEZZA: {} (modificatore: {:+}).\n", saggezza, calcoloModificatore(saggezza));
-   cout << format("CARISMA: {} (modificatore: {:+}).\n", carisma, calcoloModificatore(carisma)) << endl;
+   cout << "Final Ability Scores:" << endl;
+   cout << format("STRENGTH: {} (modifier: {:+}).\n", forza, calcoloModificatore(forza));
+   cout << format("DEXTERITY: {} (modifier: {:+}).\n", destrezza, calcoloModificatore(destrezza));
+   cout << format("CONSTITUTION: {} (modifier: {:+}).\n", costituzione, calcoloModificatore(costituzione));
+   cout << format("INTELLIGENCE: {} (modifier: {:+}).\n", intelligenza, calcoloModificatore(intelligenza));
+   cout << format("WISDOM: {} (modifier: {:+}).\n", saggezza, calcoloModificatore(saggezza));
+   cout << format("CHARISMA: {} (modifier: {:+}).\n", carisma, calcoloModificatore(carisma)) << endl;
 
-   // Creazione file di testo con i risultati
-   cout << "Salvare i risultati in un file di testo? (\"s\"=\"sì\"): ";
+   // Creation of a text file for the results
+   cout << "Save the results to a text file? (\"y\"=\"yes\"): ";
    char confermaSalvataggio_file = controllaChar();
-   if (confermaSalvataggio_file == 's' || confermaSalvataggio_file == 'S')
+   if (confermaSalvataggio_file == 'y' || confermaSalvataggio_file == 'Y')
    {
-      cout << "Inserisci il nome del file:\n";
+      cout << "Enter the filename:\n";
       string nomeFile;
       cin >> nomeFile;
       ofstream file(nomeFile + ".txt");
-      file << "Punteggi di caratteristica definitivi:\n";
-      file << format("FORZA: {} (modificatore: {:+}).\n", forza, calcoloModificatore(forza));
-      file << format("DESTREZZA: {} (modificatore: {:+}).\n", destrezza, calcoloModificatore(destrezza));
-      file << format("COSTITUZIONE: {} (modificatore: {:+}).\n", costituzione, calcoloModificatore(costituzione));
-      file << format("INTELLIGENZA: {} (modificatore: {:+}).\n", intelligenza, calcoloModificatore(intelligenza));
-      file << format("SAGGEZZA: {} (modificatore: {:+}).\n", saggezza, calcoloModificatore(saggezza));
-      file << format("CARISMA: {} (modificatore: {:+}).\n", carisma, calcoloModificatore(carisma));
+      file << "Final Ability Scores:\n";
+      file << format("STRENGTH: {} (modifier: {:+}).\n", forza, calcoloModificatore(forza));
+      file << format("DEXTERITY: {} (modifier: {:+}).\n", destrezza, calcoloModificatore(destrezza));
+      file << format("CONSTITUTION: {} (modifier: {:+}).\n", costituzione, calcoloModificatore(costituzione));
+      file << format("INTELLIGENCE: {} (modifier: {:+}).\n", intelligenza, calcoloModificatore(intelligenza));
+      file << format("WISDOM: {} (modifier: {:+}).\n", saggezza, calcoloModificatore(saggezza));
+      file << format("CHARISMA: {} (modifier: {:+}).\n", carisma, calcoloModificatore(carisma));
       file.close();
-      cout << format("Risultati salvati in {}.txt, nella cartella del progetto.", nomeFile);
+      cout << format("Results saved to {}.txt, inside the project folder.", nomeFile);
    }
 
    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-   cout << "\nPremere Invio per uscire...";
+   cout << "\nPress Enter to exit...";
    cin.get();
    return 0;
 }
@@ -114,7 +114,7 @@ int controllaInt()
    float input = 0.0;
    while (!(cin >> input) || input != static_cast<int>(input))
    {
-      cout << "Errore. Valore non riconosciuto. Riprovare: ";
+      cout << "Error. Unknown value. Please try again: ";
       cin.clear();
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
    }
@@ -127,7 +127,7 @@ char controllaChar()
    char input = ' ';
    while (!(cin >> input))
    {
-      cout << "Errore. Carattere non riconosciuto. Riprovare: ";
+      cout << "Error. Unknown character. Please try again: ";
       cin.clear();
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
    }
@@ -142,27 +142,27 @@ void assegnazioneCaratteristica(const string caratteristica, span<int> array_tot
    do
    {
       stampaArray_totali(array_totali);
-      cout << format("\n\nSpecificare la posizione (1-6) del punteggio da assegnare alla caratteristica {}: ", caratteristica);
+      cout << format("\n\nSpecify the position (1-6) of the score to assign to the ability {}: ", caratteristica);
       posizionePunteggio = controllaInt();
       int punteggio = array_totali[posizionePunteggio - 1];
       while (posizionePunteggio < 1 || posizionePunteggio > 6 || punteggio == -1)
       {
-         cout << "Errore (-1). Valore non adeguato o già scelto. Riprovare: ";
+         cout << "Error (-1). Inadequate or already chosen position. Please try again: ";
          posizionePunteggio = controllaInt();
       }
-      cout << format("Hai scelto la posizione {}, che corrisponde al punteggio {}.\n", posizionePunteggio, punteggio);
-      cout << format("Il punteggio della caratteristica {} sarà: {}. Il suo modificatore sarà: {:+}.\n\n", caratteristica, punteggio, calcoloModificatore(punteggio));
-      cout << "Confermi la scelta? (s/n): ";
+      cout << format("You have chosen position {}, which corresponds to the score {}.\n", posizionePunteggio, punteggio);
+      cout << format("The score for the ability {} will be: {}. Its modifier will be: {:+}.\n\n", caratteristica, punteggio, calcoloModificatore(punteggio));
+      cout << "Confirm the choice? (y/n): ";
       conferma = controllaChar();
-      while (conferma != 's' && conferma != 'S' && conferma != 'n' && conferma != 'N')
+      while (conferma != 'y' && conferma != 'Y' && conferma != 'n' && conferma != 'N')
       {
-         cout << "Carattere non adeguato. Inserire \"s\" per \"sì\" o \"n\" per \"no\": ";
+         cout << "Invalid character. Please enter \"y\" for \"yes\" or \"n\" for \"no\": ";
          conferma = controllaChar();
       }
    } while (conferma == 'n' || conferma == 'N');
    punteggio_caratteristica = array_totali[posizionePunteggio - 1];
-   array_totali[posizionePunteggio - 1] = -1; // Rende il punteggio scelto non più disponibile
-   cout << format("Il punteggio scelto per la caratteristica {} è {} (modificatore: {:+}).\n", caratteristica, punteggio_caratteristica, calcoloModificatore(punteggio_caratteristica)) << endl;
+   array_totali[posizionePunteggio - 1] = -1; // Makes the chosen score unavailable
+   cout << format("The score chosen for the ability {} is {} (modifier: {:+}).\n", caratteristica, punteggio_caratteristica, calcoloModificatore(punteggio_caratteristica)) << endl;
 }
 
 void stampaArray_totali(span<int> array_totali)
@@ -177,7 +177,7 @@ void stampaArray_totali(span<int> array_totali)
    cout << "] ";
    if (contatore > 1)
    {
-      cout << " \"-1\"=già scelto";
+      cout << " \"-1\"=already chosen";
    }
    contatore++;
 }
