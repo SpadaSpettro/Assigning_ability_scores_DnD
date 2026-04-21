@@ -67,12 +67,12 @@ int main()
       punteggi[h] = punteggio;
    }
    cout << "Sums of the 3 highest results for each roll series:  ";
-   assegnazioneCaratteristica("FORZA", punteggi, forza);
-   assegnazioneCaratteristica("DESTREZZA", punteggi, destrezza);
-   assegnazioneCaratteristica("COSTITUZIONE", punteggi, costituzione);
-   assegnazioneCaratteristica("INTELLIGENZA", punteggi, intelligenza);
-   assegnazioneCaratteristica("SAGGEZZA", punteggi, saggezza);
-   assegnazioneCaratteristica("CARISMA", punteggi, carisma);
+   assegnazioneCaratteristica("STRENGTH", punteggi, forza);
+   assegnazioneCaratteristica("DEXTERITY", punteggi, destrezza);
+   assegnazioneCaratteristica("CONSTITUTION", punteggi, costituzione);
+   assegnazioneCaratteristica("INTELLIGENCE", punteggi, intelligenza);
+   assegnazioneCaratteristica("WISDOM", punteggi, saggezza);
+   assegnazioneCaratteristica("CHARISMA", punteggi, carisma);
 
    cout << "Final Ability Scores:" << endl;
    cout << format("STRENGTH: {} (modifier: {:+}).\n", forza, calcoloModificatore(forza));
